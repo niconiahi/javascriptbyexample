@@ -23,7 +23,7 @@ func main() {
 		}
 
 		jsFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".js"
-		// shFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".sh"
+		shFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".sh"
 		hashFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".hash"
 
 		command := exec.Command(
@@ -42,16 +42,24 @@ func main() {
 		if isFile(hashFilePath) {
 			prevHash := readFile(hashFilePath)
 			if hash != string(prevHash) {
-				fmt.Printf("recreating hash file")
+				fmt.Printf("recreating hash file\n")
+				writeFile(
+					shFilePath,
+					[]byte(content),
+				)
 				writeFile(
 					hashFilePath,
 					[]byte(hash),
 				)
 			} else {
-				fmt.Printf("hash files match")
+				fmt.Printf("hash files match. Omitting creating files\n")
 			}
 		} else {
-			fmt.Printf("creating fresh hash file")
+			fmt.Printf("creating fresh hash file\n")
+			writeFile(
+				shFilePath,
+				[]byte(content),
+			)
 			writeFile(
 				hashFilePath,
 				[]byte(hash),
@@ -72,7 +80,10 @@ func writeFile(path string, content []byte) {
 }
 
 func isDir(path string) bool {
-	stat, _ := os.Stat(path)
+	stat, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
 	return stat.IsDir()
 }
 
@@ -93,7 +104,10 @@ func readFile(path string) []byte {
 }
 
 func isFile(path string) bool {
-	stat, _ := os.Stat(path)
+	stat, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
 	return !stat.IsDir()
 }
 
