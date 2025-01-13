@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/sha1"
 	"encoding/hex"
+	"fmt"
 	"os"
 	"os/exec"
 )
@@ -22,7 +23,7 @@ func main() {
 		}
 
 		jsFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".js"
-		shFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".sh"
+		// shFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".sh"
 		hashFilePath := examplesDir + "/" + example.Name() + "/" + info.Name() + ".hash"
 
 		command := exec.Command(
@@ -38,15 +39,19 @@ func main() {
 		prompt := []byte("$ deno run " + info.Name() + ".js" + "\n")
 		content := append(prompt, output...)
 		hash := makeHash(content)
-		if isFile(shFilePath) {
-			prevHash := readFile(shFilePath)
-			if hash != hex.EncodeToString(prevHash) {
+		if isFile(hashFilePath) {
+			prevHash := readFile(hashFilePath)
+			if hash != string(prevHash) {
+				fmt.Printf("recreating hash file")
 				writeFile(
 					hashFilePath,
 					[]byte(hash),
 				)
+			} else {
+				fmt.Printf("hash files match")
 			}
 		} else {
+			fmt.Printf("creating fresh hash file")
 			writeFile(
 				hashFilePath,
 				[]byte(hash),
