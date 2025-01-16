@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript by example: strings</title>
+    <link rel=stylesheet href="reset.css">
+    <link rel=stylesheet href="code.css">
+    <link rel=stylesheet href="styles.css">
+  </head>
+  <body>
+    <main class="example" id="strings">
+      <h2><a href="./">Javascript by example</a>: strings</h2>
+      <table>
+        
+        <tr>
+          <td class="docs">
+            strings
+          </td>
+          <td class="code empty leading">
+            strings
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>&ldquo;name&rdquo; is a <em>string</em> which value is &ldquo;Jose&rdquo;</p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">&#34;Jose&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Strings can be concatenated using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition">addition operator</a></p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">fullName</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&#34; Martinez&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;fullName&#34;</span><span class="p">,</span> <span class="nx">fullName</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>They can also be concatenated using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Addition">template literals</a></p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">otherName</span> <span class="o">=</span> <span class="s2">&#34;Lucas&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">otherFullName</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> Garcia</span><span class="sb">`</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;otherFullName&#34;</span><span class="p">,</span> <span class="nx">otherFullName</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can compare if two strings are the same one using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality">strict equality operator</a></p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">red</span> <span class="o">=</span> <span class="s2">&#34;red&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">blue</span> <span class="o">=</span> <span class="s2">&#34;blue&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;colors match?&#34;</span><span class="p">,</span> <span class="nx">red</span> <span class="o">===</span> <span class="nx">blue</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>The comparison between strings is case-senstive</p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">green</span> <span class="o">=</span> <span class="s2">&#34;green&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">greenUppercased</span> <span class="o">=</span> <span class="s2">&#34;GREEN&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;green colors match?&#34;</span><span class="p">,</span> <span class="nx">green</span> <span class="o">===</span> <span class="nx">greenUppercased</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>That&rsquo;s why, when comparing strings, either the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleLowerCase">lowercased</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleUpperCase">uppercased</a> versions should be compared</p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;lowercased green colors match?&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">green</span><span class="p">.</span><span class="nx">toLocaleLowerCase</span><span class="p">(</span><span class="p">)</span> <span class="o">===</span> <span class="nx">greenUppercased</span><span class="p">.</span><span class="nx">toLocaleLowerCase</span><span class="p">(</span><span class="p">)</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>There are two ways of getting a specific character within a string. Using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt">charAt method</a></p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">animal</span> <span class="o">=</span> <span class="s2">&#34;Lion&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;using char at&#34;</span><span class="p">,</span> <span class="nx">animal</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>The other one is using the array-like notation</p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;using array-like notation&#34;</span><span class="p">,</span> <span class="nx">animal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can verify if a given variable is a <em>string</em> using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">typeof operator</a></p>
+
+          </td>
+          <td class="code empty leading">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;typeof animal&#34;</span><span class="p">,</span> <span class="k">typeof</span> <span class="nx">animal</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+    </main>
+  </body>
+</html>

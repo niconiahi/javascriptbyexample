@@ -1,0 +1,51 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #1f1f1f;
+  color: #dadada;
+}
+
+main {
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8vh;
+}
+
+a {
+  color: #dadada;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 4vh;
+}
+
+h2 a {
+  text-decoration: none;
+}
+
+.chroma {
+  background-color: inherit;
+}
+
+.code {
+  width: 480px;
+  padding: 4px;
+  background-color: #282828;
+  vertical-align: top;
+}
+
+.leading {
+  padding-bottom: 11px;
+}
+
+.docs {
+  width: 420px;
+  padding: 4px;
+  vertical-align: top;
+  text-align: left;
+}
