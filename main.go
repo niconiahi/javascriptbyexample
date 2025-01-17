@@ -2,7 +2,6 @@ package main
 
 import (
 	"embed"
-	"fmt"
 	"io/fs"
 	"log"
 	"net/http"
@@ -21,14 +20,11 @@ func main() {
 			log.Fatal(err)
 		}
 		p := r.URL.Path
-		fmt.Printf("%v\n", p)
 		if path.Ext(p) == "" {
-			fmt.Printf("is html %v\n", p)
 			p = p + ".html"
 			w.Header().Set("Content-Type", "text/html")
 		}
 		if path.Ext(p) == ".css" {
-			fmt.Printf("is css %v\n", p)
 			w.Header().Set("Content-Type", "text/css")
 		}
 		content, err := fs.ReadFile(fsys, p[1:])
