@@ -6,6 +6,8 @@ body {
 body {
   background-color: #1f1f1f;
   color: #dadada;
+  font-family: "Georgia", serif;
+  font-size: 16px;
 }
 
 main {
@@ -28,23 +30,38 @@ h2 a {
   text-decoration: none;
 }
 
+table tbody tr:last-child td:last-child {
+  padding-bottom: 4px;
+}
+
+table tbody tr:first-child td:first-child {
+  padding-bottom: 3vh;
+}
+
 .chroma {
   background-color: inherit;
 }
 
 .code {
-  width: 480px;
-  padding: 4px;
+  width: 500px;
+  max-width: 500px;
+  min-width: 500px;
+  padding-top: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 11px;
   background-color: #282828;
   vertical-align: top;
 }
 
-.leading {
-  padding-bottom: 11px;
+.code.empty {
+  background-color: #1f1f1f;
 }
 
 .docs {
-  width: 420px;
+  width: 400px;
+  max-width: 400px;
+  min-width: 400px;
   padding: 4px;
   vertical-align: top;
   text-align: left;

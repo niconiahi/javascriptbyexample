@@ -37,12 +37,18 @@ type Segment struct {
 }
 
 type Example struct {
-	ID       string
-	Name     string
-	Hash     string
-	Segments []Segment
-	Next     *string
-	Previous *string
+	ID          string
+	Name        string
+	Hash        string
+	Description string
+	Segments    []Segment
+	Next        *string
+	Previous    *string
+}
+
+func makeDescription(path string) string {
+	lines := readLines(path)
+	return strings.Trim(lines[0], " /")
 }
 
 func makeExamples() []Example {
@@ -57,8 +63,9 @@ func makeExamples() []Example {
 		example.ID = info.Name()
 		example.Name = info.Name()
 		example.Next = getNextId(i, entries)
-		example.Previous = getPreviousId(i, entries)
 		jsFilePath := composePath(entry.Name(), "js")
+		example.Description = makeDescription(jsFilePath)
+		example.Previous = getPreviousId(i, entries)
 		if isFile(jsFilePath) {
 			segments := makeSegments(jsFilePath)
 			example.Segments = segments
@@ -178,8 +185,8 @@ func makeFiles(examples []Example) {
 	for _, example := range examples {
 		var rows []Row
 		description := Row{
-			Markdown:  example.ID,
-			CodeBlock: example.ID,
+			Markdown:  makeMarkdown(example.Description),
+			CodeBlock: "",
 		}
 		rows = append(rows, description)
 		for _, segment := range example.Segments {
@@ -229,6 +236,7 @@ func readLines(path string) []string {
 
 func makeSegments(path string) []Segment {
 	lines := readLines(path)
+	lines = lines[2:]
 	nextSegment := Segment{}
 	segments := []Segment{}
 	for _, line := range lines {

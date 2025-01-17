@@ -16,7 +16,7 @@
           <td class="docs">
             {{.Markdown}}
           </td>
-          <td class="code{{if .CodeBlock }} empty{{end}}{{if .CodeBlock}} leading{{end}}">
+          <td class="code{{if eq .CodeBlock "" }} empty{{end}}">
             {{.CodeBlock}}
           </td>
         </tr>
