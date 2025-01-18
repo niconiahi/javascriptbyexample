@@ -12,11 +12,11 @@ console.log("four divided by two is", divided)
 
 // You can substract _numbers_
 const substracted = four - two
-console.log("for minus two is", substracted)
+console.log("four minus two is", substracted)
 
 // You can multiply _numbers_
 const multiplied = four * two
-console.log("for times two is", multiplied)
+console.log("four times two is", multiplied)
 
 // You can get the remainder of one _number_ over another with the [remainder operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder)
 const remainder = four % two

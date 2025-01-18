@@ -5,7 +5,6 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"fmt"
-	"io/fs"
 	"os"
 	"os/exec"
 	"regexp"
@@ -22,6 +21,7 @@ import (
 const publicDir = "./public"
 const examplesDir = "./examples"
 const templatesDir = "./templates"
+const examplesFilePath = "./examples.txt"
 
 type Lexer string
 
@@ -41,6 +41,7 @@ type Example struct {
 	Name        string
 	Hash        string
 	Description string
+	Console     string
 	Segments    []Segment
 	Next        *string
 	Previous    *string
@@ -53,32 +54,47 @@ func makeDescription(path string) string {
 
 func makeExamples() []Example {
 	examples := []Example{}
+	ids := readLines(examplesFilePath)
 	entries := readDir(examplesDir)
-	for i, entry := range entries {
+	if len(ids) != len(entries) {
+		panic("the amount of examples in the txt should match the amount of examples in examples directory")
+	}
+	for i, id := range ids {
+		jsFilePath := composePath(id, "js")
+		content := readFile(jsFilePath)
 		example := Example{}
-		_, err := entry.Info()
-		if err != nil {
-			panic("not possible to get file info for example")
-		}
-		example.ID = getId(entry)
+		example.ID = id
 		example.Name = makeName(example.ID)
-		example.Next = getNextId(i, entries)
-		jsFilePath := composePath(entry.Name(), "js")
+		example.Hash = makeHash(content)
 		example.Description = makeDescription(jsFilePath)
-		example.Previous = getPreviousId(i, entries)
+		example.Next = getNextId(i, ids)
+		example.Previous = getPreviousId(i, ids)
 		if isFile(jsFilePath) {
 			segments := makeSegments(jsFilePath)
 			example.Segments = segments
 		}
-		content := readFile(jsFilePath)
-		hash := makeHash(content)
-		example.Hash = hash
 		examples = append(examples, example)
 	}
 	return examples
 }
 
-func makeTerminal(example Example) []byte {
+func formatConsole(console []byte) string {
+	lexer := ConsoleLexer
+	formatter := html.New(html.WithClasses(true))
+	iterator, err := lexer.Tokenise(nil, string(console))
+	if err != nil {
+		panic("there was an error while tokenasing the code")
+	}
+	buffer := bytes.NewBuffer([]byte{})
+	style := getStyle()
+	err = formatter.Format(buffer, style, iterator)
+	if err != nil {
+		panic("there was an error while formatting the code")
+	}
+	return buffer.String()
+}
+
+func makeConsole(example Example) []byte {
 	jsFilePath := composePath(example.ID, "js")
 	command := exec.Command(
 		"deno", "run",
@@ -89,9 +105,9 @@ func makeTerminal(example Example) []byte {
 	if err != nil {
 		panic("could not execute the deno command for the js example file")
 	}
-	prompt := []byte("$ deno run " + example.ID + ".js" + "\n")
-	prompt = append(prompt, output...)
-	return prompt
+	console := []byte("$ deno run " + example.ID + ".js" + "\n")
+	console = append(console, output...)
+	return console
 }
 
 func makeHashFile(example Example) {
@@ -101,10 +117,10 @@ func makeHashFile(example Example) {
 		prevHash := readFile(hashFilePath)
 		if example.Hash != string(prevHash) {
 			fmt.Printf("recreating hash file\n")
-			terminal := makeTerminal(example)
+			console := makeConsole(example)
 			writeFile(
 				shFilePath,
-				[]byte(terminal),
+				[]byte(console),
 			)
 			writeFile(
 				hashFilePath,
@@ -115,10 +131,10 @@ func makeHashFile(example Example) {
 		}
 	} else {
 		fmt.Printf("creating fresh hash file\n")
-		terminal := makeTerminal(example)
+		console := makeConsole(example)
 		writeFile(
 			shFilePath,
-			[]byte(terminal),
+			[]byte(console),
 		)
 		writeFile(
 			hashFilePath,
@@ -166,7 +182,8 @@ type PageDataExample struct {
 	Name     string
 	Next     *string
 	Previous *string
-	Rows     []Row
+	Segments []Row
+	Console  Row
 }
 type PageTemplate string
 
@@ -183,12 +200,12 @@ func makeTemplate(t PageTemplate) *template.Template {
 
 func makeFiles(examples []Example) {
 	for _, example := range examples {
-		var rows []Row
+		var segments []Row
 		description := Row{
 			Markdown:  makeMarkdown(example.Description),
 			CodeBlock: "",
 		}
-		rows = append(rows, description)
+		segments = append(segments, description)
 		for _, segment := range example.Segments {
 			markdown := makeMarkdown(segment.Documentation)
 			codeBlock := makeCodeBlock(segment.Code)
@@ -196,7 +213,11 @@ func makeFiles(examples []Example) {
 				Markdown:  markdown,
 				CodeBlock: codeBlock,
 			}
-			rows = append(rows, row)
+			segments = append(segments, row)
+		}
+		console := Row{
+			Markdown:  "",
+			CodeBlock: formatConsole(makeConsole(example)),
 		}
 		t := makeTemplate(TemplateExample)
 		var buffer bytes.Buffer
@@ -204,7 +225,8 @@ func makeFiles(examples []Example) {
 			Name:     example.Name,
 			Next:     example.Next,
 			Previous: example.Previous,
-			Rows:     rows,
+			Segments: segments,
+			Console:  console,
 		})
 		if err != nil {
 			fmt.Printf("%v\n", err.Error())
@@ -212,6 +234,7 @@ func makeFiles(examples []Example) {
 		}
 		writeFile(publicDir+"/"+example.ID+".html", buffer.Bytes())
 		makeHashFile(example)
+
 	}
 }
 
@@ -231,7 +254,7 @@ func composePath(id string, extension string) string {
 
 func readLines(path string) []string {
 	content := readFile(path)
-	return strings.Split(string(content), "\n")
+	return strings.Split(strings.TrimSpace(string(content)), "\n")
 }
 
 func makeSegments(path string) []Segment {
@@ -272,7 +295,7 @@ func writeFile(path string, bytes []byte) {
 		0644,
 	)
 	if err != nil {
-		panic("could not write the prompt text for the js example file")
+		panic("could not write the bytes at the targeted path")
 	}
 }
 
@@ -339,29 +362,47 @@ func makeShellLexer() chroma.Lexer {
 	return lexer
 }
 
-func getId(entry fs.DirEntry) string {
-	return entry.Name()
-}
-
-func getPreviousId(index int, entries []fs.DirEntry) *string {
+func getPreviousId(index int, entries []string) *string {
 	if index == 0 {
 		return nil
 	}
-	id := getId(entries[index-1])
+	id := entries[index-1]
 	return &id
 }
 
-func getNextId(index int, entries []fs.DirEntry) *string {
+func getNextId(index int, entries []string) *string {
 	if index >= len(entries)-1 {
 		return nil
 	}
-	id := getId(entries[index+1])
+	id := entries[index+1]
 	return &id
 }
 
 func makeName(id string) string {
 	return strings.ReplaceAll(id, "-", " ")
-	// firstLetter := id[0:1]
-	// rest := id[1:]
-	// return fmt.Sprintf("%v%v", strings.ToUpper(firstLetter), strings.ToLower(rest))
 }
+
+var ConsoleLexer = chroma.MustNewLexer(
+	&chroma.Config{
+		Name: "ConsoleOutput",
+	},
+	func() chroma.Rules {
+		return chroma.Rules{
+			"root": {
+				// the search starts with the capture of "$", after that it's the command
+				{Pattern: `^\$`, Type: chroma.GenericError, Mutator: chroma.Push("command")},
+			},
+			"command": {
+				// after line jump, it's all output
+				{Pattern: `\n`, Type: chroma.Text, Mutator: chroma.Push("output")},
+
+				// command style until line jump
+				{Pattern: `[^\n]+`, Type: chroma.StringSymbol, Mutator: nil},
+			},
+			"output": {
+				// style every line until the end as output
+				{Pattern: `[^\n]+$\n?`, Type: chroma.GenericOutput, Mutator: nil},
+			},
+		}
+	},
+)

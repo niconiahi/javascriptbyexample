@@ -11,7 +11,19 @@
     <main id="{{.Name}}">
       <h2><a href="./">Javascript by example</a>: {{.Name}}</h2>
       <table>
-        {{range .Rows }}
+        {{range .Segments }}
+        <tr>
+          <td class="docs">
+            {{.Markdown}}
+          </td>
+          <td class="code{{if eq .CodeBlock "" }} empty{{end}}">
+            {{.CodeBlock}}
+          </td>
+        </tr>
+        {{end}}
+      </table>
+      <table>
+        {{with .Console}}
         <tr>
           <td class="docs">
             {{.Markdown}}
