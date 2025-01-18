@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript by example: numbers</title>
+    <link rel=stylesheet href="reset.css">
+    <link rel=stylesheet href="code.css">
+    <link rel=stylesheet href="styles.css">
+  </head>
+  <body>
+    <main id="numbers">
+      <h2><a href="./">Javascript by example</a>: numbers</h2>
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p><em>numbers</em> are numbers</p>
+
+          </td>
+          <td class="code empty">
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can sum <em>numbers</em></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">two</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">four</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">summed</span> <span class="o">=</span> <span class="nx">four</span> <span class="o">+</span> <span class="nx">two</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;four plus two is&#34;</span><span class="p">,</span> <span class="nx">summed</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can divide <em>numbers</em></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">divided</span> <span class="o">=</span> <span class="nx">four</span> <span class="o">/</span> <span class="nx">two</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;four divided by two is&#34;</span><span class="p">,</span> <span class="nx">divided</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can substract <em>numbers</em></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">substracted</span> <span class="o">=</span> <span class="nx">four</span> <span class="o">-</span> <span class="nx">two</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;for minus two is&#34;</span><span class="p">,</span> <span class="nx">substracted</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can multiply <em>numbers</em></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">multiplied</span> <span class="o">=</span> <span class="nx">four</span> <span class="o">*</span> <span class="nx">two</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;for times two is&#34;</span><span class="p">,</span> <span class="nx">multiplied</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can get the remainder of one <em>number</em> over another with the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder">remainder operator</a></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">remainder</span> <span class="o">=</span> <span class="nx">four</span> <span class="o">*</span> <span class="nx">two</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;the remainder is&#34;</span><span class="p">,</span> <span class="nx">remainder</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>It&rsquo;s possible to <a href="https://en.wikipedia.org/wiki/Type_conversion">typecast</a> a string to a <em>number</em></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">casted</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="s2">&#34;2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`</span><span class="sb">casting the string &#34;2&#34; to number results in</span><span class="sb">`</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">casted</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>If the type cast fails, then <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN">NaN</a> is returned</p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">castedFail</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="s2">&#34;Sun&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`</span><span class="sb">casting the string &#34;Sun&#34; to number results in</span><span class="sb">`</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">castedFail</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can verify if a given variable is a <em>number</em> using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">typeof operator</a></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="sb">the type of &#34;two&#34; is</span><span class="sb">`</span><span class="p">,</span> <span class="k">typeof</span> <span class="nx">two</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+      </table>
+      <nav>
+        
+        
+        <p class="next">
+          Next example: <a href="strings" rel="next">strings</a>
+        </p>
+        
+      </nav>
+    </main>
+  </body>
+</html>

@@ -22,16 +22,18 @@
         </tr>
         {{end}}
       </table>
-      {{if .Previous}}
-      <p class="previous">
-        Previous example: <a href="{{.Previous}}" rel="previous">{{.Previous}}</a>
-      </p>
-      {{end}}
-      {{if .Next}}
-      <p class="next">
-        Next example: <a href="{{.Next}}" rel="next">{{.Next}}</a>
-      </p>
-      {{end}}
+      <nav>
+        {{if .Previous}}
+        <p class="previous">
+          Previous example: <a href="{{.Previous}}" rel="previous">{{.Previous}}</a>
+        </p>
+        {{end}}
+        {{if .Next}}
+        <p class="next">
+          Next example: <a href="{{.Next}}" rel="next">{{.Next}}</a>
+        </p>
+        {{end}}
+      </nav>
     </main>
   </body>
 </html>

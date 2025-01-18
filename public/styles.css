@@ -30,6 +30,10 @@ h2 a {
   text-decoration: none;
 }
 
+nav {
+  margin-top: 2vh;
+}
+
 table tbody tr:last-child td:last-child {
   padding-bottom: 4px;
 }

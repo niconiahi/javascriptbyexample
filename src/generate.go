@@ -56,12 +56,12 @@ func makeExamples() []Example {
 	entries := readDir(examplesDir)
 	for i, entry := range entries {
 		example := Example{}
-		info, err := entry.Info()
+		_, err := entry.Info()
 		if err != nil {
 			panic("not possible to get file info for example")
 		}
-		example.ID = info.Name()
-		example.Name = info.Name()
+		example.ID = getId(entry)
+		example.Name = makeName(example.ID)
 		example.Next = getNextId(i, entries)
 		jsFilePath := composePath(entry.Name(), "js")
 		example.Description = makeDescription(jsFilePath)
@@ -339,11 +339,15 @@ func makeShellLexer() chroma.Lexer {
 	return lexer
 }
 
+func getId(entry fs.DirEntry) string {
+	return entry.Name()
+}
+
 func getPreviousId(index int, entries []fs.DirEntry) *string {
 	if index == 0 {
 		return nil
 	}
-	id := entries[index-1].Name()
+	id := getId(entries[index-1])
 	return &id
 }
 
@@ -351,12 +355,13 @@ func getNextId(index int, entries []fs.DirEntry) *string {
 	if index >= len(entries)-1 {
 		return nil
 	}
-	id := entries[index+1].Name()
+	id := getId(entries[index+1])
 	return &id
 }
 
 func makeName(id string) string {
-	firstLetter := id[0:1]
-	rest := id[1:]
-	return fmt.Sprintf("%v%v", strings.ToUpper(firstLetter), strings.ToLower(rest))
+	return strings.ReplaceAll(id, "-", " ")
+	// firstLetter := id[0:1]
+	// rest := id[1:]
+	// return fmt.Sprintf("%v%v", strings.ToUpper(firstLetter), strings.ToLower(rest))
 }
