@@ -1,2 +1,3 @@
 strings
 numbers
+objects

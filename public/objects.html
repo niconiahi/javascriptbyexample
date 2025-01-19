@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript by example: objects</title>
+    <link rel=stylesheet href="reset.css">
+    <link rel=stylesheet href="code.css">
+    <link rel=stylesheet href="styles.css">
+  </head>
+  <body>
+    <main id="objects">
+      <h2><a href="./">Javascript by example</a>: objects</h2>
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>an <em>object</em> allows you to group pieces of data to represent something</p>
+
+          </td>
+          <td class="code empty">
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><em>objects</em> are composed of <em>key-value pairs</em></p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">object</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">key</span><span class="o">:</span> <span class="s2">&#34;value&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;object&#34;</span><span class="p">,</span> <span class="nx">object</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>&ldquo;person&rdquo; is an <em>object</em> which has two <em>keys</em>: &ldquo;name&rdquo; which <em>value</em> is &ldquo;Mario&rdquo; and &ldquo;surname&rdquo; which <em>value</em> is &ldquo;Baracuz&rdquo;</p>
+
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Mario&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">surname</span><span class="o">:</span> <span class="s2">&#34;Baracuz&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;person&#34;</span><span class="p">,</span> <span class="nx">person</span><span class="p">)</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+      </table>
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            <pre class="chroma"><code><span class="line"><span class="cl"><span class="gr">$</span><span class="ss"> deno run objects.js</span>
+</span></span><span class="line"><span class="cl"><span class="go">object { key: &#34;value&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="go"></span><span class="go">person { name: &#34;Mario&#34;, surname: &#34;Baracuz&#34; }
+</span></span></span></code></pre>
+          </td>
+        </tr>
+        
+      </table>
+      <nav>
+        
+        <p class="previous">
+          Previous example: <a href="numbers" rel="previous">numbers</a>
+        </p>
+        
+        
+      </nav>
+    </main>
+  </body>
+</html>

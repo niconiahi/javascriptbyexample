@@ -229,7 +229,6 @@ func makeFiles(examples []Example) {
 			Console:  console,
 		})
 		if err != nil {
-			fmt.Printf("%v\n", err.Error())
 			panic("error while generating the page template")
 		}
 		writeFile(publicDir+"/"+example.ID+".html", buffer.Bytes())
@@ -262,7 +261,7 @@ func makeSegments(path string) []Segment {
 	lines = lines[2:]
 	nextSegment := Segment{}
 	segments := []Segment{}
-	for _, line := range lines {
+	for i, line := range lines {
 		matchesDocs := docsRegex.MatchString(line)
 		matchesCode := !matchesDocs
 		matchesEmptyLine := strings.TrimSpace(line) == ""
@@ -272,13 +271,22 @@ func makeSegments(path string) []Segment {
 				nextSegment,
 			)
 			nextSegment = Segment{}
+			continue
 		}
 		if matchesDocs {
 			nextSegment.Documentation = strings.Trim(line, " /")
+			continue
 		}
 		if matchesCode {
 			nextCode := fmt.Sprintf("%v\n%v", nextSegment.Code, line)
 			nextSegment.Code = strings.TrimSpace(nextCode)
+			if i == len(lines)-1 {
+				segments = append(
+					segments,
+					nextSegment,
+				)
+			}
+			continue
 		}
 	}
 	return segments
